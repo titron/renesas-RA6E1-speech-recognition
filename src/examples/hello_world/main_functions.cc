@@ -15,6 +15,8 @@ limitations under the License.
 
 #include "main_functions.h"
 
+#include "model_tflite.h"
+
 #include "tensorflow/lite/micro/all_ops_resolver.h"
 #include "constants.h"
 #include "hello_world_model_data.h"
@@ -25,6 +27,16 @@ limitations under the License.
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "hal_data.h"
 
+
+#include <dsp/basic_math_functions.h>
+#include <dsp/transform_functions.h>
+#include <dsp/window_functions.h>
+#include <dsp/fast_math_functions.h>
+//#include <tensorflow/lite/micro/micro_log.h>
+#include <tensorflow/lite/micro/micro_mutable_op_resolver.h>
+#include <tensorflow/lite/micro/micro_op_resolver.h>
+#include <tensorflow/lite/micro/micro_profiler.h>
+#include <tensorflow/lite/micro/recording_micro_interpreter.h>
 
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
@@ -39,7 +51,7 @@ constexpr int kTensorArenaSize = 2000;
 uint8_t tensor_arena[kTensorArenaSize];
 }  // namespace
 
-#if 0
+#if COMMENT_RAW_CODE
 
 // The name of this function is important for Arduino compatibility.
 void setup() {
@@ -86,10 +98,104 @@ void setup() {
   inference_count = 0;
 }
 #else
+
+void PrintModelDetails(const tflite::Model *model)
+{
+    my_printf("TFlite schema version: %lu\n\r", model->version());
+    assert(model->version() == TFLITE_SCHEMA_VERSION);
+
+    // Primary subgraph usually at index 0
+    const tflite::SubGraph *subgraph = model->subgraphs()->Get(0);
+
+    my_printf("Number of tensors: %lu\n\r", subgraph->tensors()->size());
+    for (size_t i = 0; i < subgraph->tensors()->size(); i++) {
+        const tflite::Tensor *tensor = subgraph->tensors()->Get(i);
+        my_printf(
+            "    %u: %s\n\r", i,
+            (char *)tflite::EnumNameTensorType(tensor->type()));
+    }
+    my_printf("Number of operators: %lu\n\r",
+             subgraph->operators()->size());
+
+    // Iterate over operators and print their details
+    for (size_t i = 0; i < subgraph->operators()->size(); i++) {
+        const tflite::Operator *op = subgraph->operators()->Get(i);
+        const tflite::OperatorCode *op_code =
+            model->operator_codes()->Get(op->opcode_index());
+
+        const char *op_name = tflite::EnumNameBuiltinOperator(
+            static_cast<tflite::BuiltinOperator>(
+                op_code->builtin_code()));
+
+        my_printf("    %u: %s\n\r", i, op_name);
+
+        my_printf("        Inputs: ");
+        for (size_t j = 0; j < op->inputs()->size(); j++) {
+            printf("%lu ", op->inputs()->Get(j));
+        }
+        my_printf("\n\r");
+
+        my_printf("        Outputs: ");
+        for (size_t j = 0; j < op->outputs()->size(); j++) {
+            printf("%lu ", op->outputs()->Get(j));
+        }
+        my_printf("\n\r");
+    }
+}
+
 void setup()
 {
-    double temp = 100.03;
-    my_printf("hello = %4.2f, hex = 0x%x.\n\r",temp, 0x55);
+//    double temp = 100.03;
+//    my_printf("integer = %d, temp = %g, hex = 0x%x.\n\r",100, temp, 0x55);
+    tflite::InitializeTarget();
+
+    const static uint32_t window_size = 256;
+    const static uint32_t frame_step = 128;
+
+    arm_rfft_fast_instance_f32 fft;
+    if (arm_rfft_fast_init_256_f32(&fft) != ARM_MATH_SUCCESS) {
+        assert(!"Failed to init RFFT");
+    }
+
+    static float hanning[window_size];
+    arm_hanning_f32(hanning, window_size);
+
+    const tflite::Model *model = tflite::GetModel(model_tflite);
+    my_printf("Model architecture:\n\r");
+    my_printf("==============================================\n\r");
+    PrintModelDetails(model);
+
+    tflite::MicroMutableOpResolver<8> op_resolver;
+
+    // Not really sure which ops to add
+    if (op_resolver.AddRelu() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddConv2D() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddMaxPool2D() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddReshape() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddFullyConnected() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddSoftmax() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddResizeBilinear() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+    if (op_resolver.AddQuantize() != kTfLiteOk) {
+        assert(!"Failed to add op");
+    }
+
+    my_printf("Added operations to OpsResolver.\n\r");
+
+
 }
 #endif
 
