@@ -171,6 +171,10 @@
       <description>SCI UART</description>
       <originalPack>Renesas.RA.5.7.0.pack</originalPack>
     </component>
+    <component apiversion="" class="CMSIS" condition="" group="CMSIS5" subgroup="DSP" variant="" vendor="Arm" version="1.16.2+fsp.5.7.0">
+      <description>Arm DSP Library Source</description>
+      <originalPack>Arm.CMSIS-DSP.1.16.2+fsp.5.7.0.pack</originalPack>
+    </component>
   </raComponentSelection>
   <raElcConfiguration/>
   <raIcuConfiguration/>

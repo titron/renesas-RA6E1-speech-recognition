@@ -28,6 +28,8 @@ int main() {
   R_SCI_UART_Open(&g_uart0_ctrl, &g_uart0_cfg);
   setup();
   while (true) {
+#if 0
     loop();
+#endif
   }
 }

@@ -81,6 +81,22 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+ra/arm/CMSIS-DSP/Source/BasicMathFunctions \
+ra/arm/CMSIS-DSP/Source/BayesFunctions \
+ra/arm/CMSIS-DSP/Source/CommonTables \
+ra/arm/CMSIS-DSP/Source/ComplexMathFunctions \
+ra/arm/CMSIS-DSP/Source/ControllerFunctions \
+ra/arm/CMSIS-DSP/Source/DistanceFunctions \
+ra/arm/CMSIS-DSP/Source/FastMathFunctions \
+ra/arm/CMSIS-DSP/Source/FilteringFunctions \
+ra/arm/CMSIS-DSP/Source/InterpolationFunctions \
+ra/arm/CMSIS-DSP/Source/MatrixFunctions \
+ra/arm/CMSIS-DSP/Source/QuaternionMathFunctions \
+ra/arm/CMSIS-DSP/Source/SVMFunctions \
+ra/arm/CMSIS-DSP/Source/StatisticsFunctions \
+ra/arm/CMSIS-DSP/Source/SupportFunctions \
+ra/arm/CMSIS-DSP/Source/TransformFunctions \
+ra/arm/CMSIS-DSP/Source/WindowFunctions \
 ra/board/ra6e1_voice \
 ra/fsp/src/bsp/cmsis/Device/RENESAS/Source \
 ra/fsp/src/bsp/mcu/all \

@@ -39,6 +39,8 @@ constexpr int kTensorArenaSize = 2000;
 uint8_t tensor_arena[kTensorArenaSize];
 }  // namespace
 
+#if 0
+
 // The name of this function is important for Arduino compatibility.
 void setup() {
   tflite::InitializeTarget();
@@ -83,6 +85,13 @@ void setup() {
   // Keep track of how many inferences we have performed.
   inference_count = 0;
 }
+#else
+void setup()
+{
+    double temp = 100.03;
+    my_printf("hello = %4.2f, hex = 0x%x.\n\r",temp, 0x55);
+}
+#endif
 
 // The name of this function is important for Arduino compatibility.
 void loop() {

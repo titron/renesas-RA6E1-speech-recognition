@@ -24,4 +24,6 @@ void HandleOutput(tflite::ErrorReporter* error_reporter,
                     float x_value,
                   float y_value);
 
+void my_printf(const char *fmt,...);
+
 #endif  // TENSORFLOW_LITE_MICRO_EXAMPLES_HELLO_WORLD_OUTPUT_HANDLER_H_

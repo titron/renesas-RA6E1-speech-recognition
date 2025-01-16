@@ -31,6 +31,22 @@ RM := rm -rf
 -include ra/fsp/src/bsp/mcu/all/subdir.mk
 -include ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/subdir.mk
 -include ra/board/ra6e1_voice/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/WindowFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/TransformFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/SupportFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/StatisticsFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/SVMFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/QuaternionMathFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/MatrixFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/InterpolationFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/FilteringFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/FastMathFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/DistanceFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/ControllerFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/ComplexMathFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/CommonTables/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/BayesFunctions/subdir.mk
+-include ra/arm/CMSIS-DSP/Source/BasicMathFunctions/subdir.mk
 -include subdir.mk
 -include objects.mk
 

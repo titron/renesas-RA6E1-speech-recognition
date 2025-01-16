@@ -37,3 +37,15 @@ void HandleOutput(tflite::ErrorReporter* error_reporter,
   //                     static_cast<double>(x_value),
   //                     static_cast<double>(y_value));
 }
+
+
+void my_printf(const char *fmt,...)
+{
+    va_list ap;
+    uint8_t string[256];
+
+    va_start(ap,fmt);
+    vsprintf((char*)string,fmt,ap);
+    va_end(ap);
+    R_SCI_UART_Write(&g_uart0_ctrl, (const unsigned char*)string, (unsigned long int)strlen((const char*)string));
+}
