@@ -23,6 +23,7 @@ RM := rm -rf
 -include src/tensorflow/lite/kernels/subdir.mk
 -include src/tensorflow/lite/core/api/subdir.mk
 -include src/tensorflow/lite/c/subdir.mk
+-include src/model/subdir.mk
 -include src/examples/hello_world/subdir.mk
 -include src/subdir.mk
 -include ra_gen/subdir.mk

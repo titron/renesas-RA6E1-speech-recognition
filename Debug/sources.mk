@@ -118,4 +118,5 @@ src/tensorflow/lite/micro/memory_planner \
 src/tensorflow/lite/schema \
 src/third_party/kissfft \
 src/third_party/kissfft/tools \
+src/model \
 
